@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Свой сайт с блэкдежком..</title>
+</head>
+<body>
+    <h1>Мой личный сайт с блэкджеком...</h1>
+    <section>
+        <h2>Правила</h2>
+        <p>методом рандома получаем карту со зачением от 2 до 11 (в колоде 54 карты, туз - 11 очков, король - 4 очка, дама - 3 очка, валет - 2 очка, 2 - 2 очка;...... 10 - 10 очков)</p>
+        <p>Каждому игроку сдается по 2 карты. У кого больше очков - выиграл. У кого будет больше 21 - проиграл.</p>
+    </section>
+    <br>
+    <button onclick="cardTake()" id="button"><b>Федор</b> возмите карту</button>
+    <button style="display: none" onClick="window.location.href=window.location.href" id="reset">Начать заново</button>
+    <i style="color: red; font-weight: bold" id="result"></i>
+    <br><br>
+    <p><b class="name">Федор</b> получил карту: <span id="card"></span></p>
+    <p style="font-weight: bold">Количество очков у Федора: <span id="fedorPoints">0</span></p>
+    <p style="font-weight: bold">Количество очков у Петра: <span id="peterPoints">0</span></p>
+    <script>
+    let fedorPoints = 0;
+    let peterPoints = 0;
+    let i = 0;
+    let name = document.getElementsByTagName("b");
+    let result = document.getElementById("result");
+    let button = document.getElementById("button");
+    let reset = document.getElementById("reset");
+    function cardTake() {
+        while (true) {
+            let card = parseInt(Math.random() * 100);
+            if (card >= 2 && card <= 11) {
+                document.getElementById("card").innerHTML = card;
+                if (i === 0 || i === 2) {
+                    name[1].innerHTML = "Федор";
+                    fedorPoints += card;
+                    document.getElementById("fedorPoints").innerHTML = fedorPoints;
+                    i++;
+                    name[0].innerHTML = "Петр";
+                        if (fedorPoints > 21) {
+                            result.innerHTML = "Петр победил! Федор проиграл, т.к. набрал больше 21.";
+                            button.style.display = "none";
+                            reset.style.display = "inline";
+                            break;
+                        }
+                    return;
+                } else if (i === 1) {
+                    name[1].innerHTML = "Петр";
+                    peterPoints += card;
+                    document.getElementById("peterPoints").innerHTML = peterPoints;
+                    i++;
+                    name[0].innerHTML = "Федор";
+                        if (peterPoints > 21) {
+                            result.innerHTML = "Федор победил! Петр проиграл, т.к. набрал больше 21.";
+                            button.style.display = "none";
+                            reset.style.display = "inline";
+                            break;
+                        }
+                    return;
+                } else {
+                    name[1].innerHTML = "Петр";
+                    peterPoints += card;
+                    document.getElementById("peterPoints").innerHTML = peterPoints;
+                    button.style.display = "none";
+                    reset.style.display = "inline";
+                        if (fedorPoints > peterPoints) {
+                            result.innerHTML = "Федор победил!";
+                        } else if (peterPoints > fedorPoints) {
+                            result.innerHTML = "Петр победил!";
+                        } else  {
+                            result.innerHTML = "Боевая ничья!";
+                        }
+                    break;
+                }
+            }
+        }
+    }
+    </script>
+</body>
+</html>
